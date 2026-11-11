@@ -8,7 +8,7 @@
   1. verificador independente das regras (escrito a partir do PDF, sem reutilizar o autômato) aprova a escala;
   2. enumeração exaustiva das 3^14 sequências: aceitação do autômato == regras individuais 1-7;
   3. instância inviável (cobertura 3 por turno) gera a mensagem de inviabilidade.
-- Ações que exigem aprovação humana: apenas publicar (git push) no GitHub.
+- Ações que exigem aprovação humana: nenhuma (trabalho publicado em 2026-11-11).
 - Teto de iteração: 3 tentativas de reparo; parar se o mesmo teste falhar 2x com o mesmo erro.
 
 ## Decisões
@@ -23,5 +23,5 @@
 - Checagens (2026-11-11): `verificar.py` -> exit 0 (4/4 OK, ~30 s) com `uv run --python 3.12 --with ortools`, e também a partir de venv 3.12 criado com `requirements.txt` (ortools 9.15.6755). Saída do modelo idêntica em 3 execuções (seed fixa).
 - Ambiente: o Python 3.14 do sistema não tem OR-Tools; use Python 3.12/3.13 conforme o README.
 - Todos os 9 itens de `feature_list.json` com `passes: true`.
-- Riscos abertos: o professor pode esperar a folga artificial do exemplo no lugar de estados finais (equivalentes; ver verificação exaustiva). Prazo no PDF diz 09/10/2026, data anterior ao próprio PDF (criado em 29/10); provavelmente 09/11/2026 — confirmar no SIGAA.
-- Próxima ação: revisão humana, confirmar prazo, `git push` (com aprovação) e entrega no SIGAA.
+- Riscos residuais: o professor pode esperar a folga artificial do exemplo no lugar de estados finais (equivalentes; ver verificação exaustiva). Prazo confirmado pelo autor em 2026-11-11 (o PDF traz 09/10/2026, data anterior ao próprio PDF).
+- Próxima ação: nenhuma — trabalho encerrado, publicado (`efec34c`) e prazo confirmado.
