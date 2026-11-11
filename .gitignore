@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Metadados do Windows (downloads)
+*:Zone.Identifier
+
+# Material do professor: o PDF pede para não distribuir
+PPR 2026.2 - Atividade 3.pdf

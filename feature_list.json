@@ -1,0 +1,81 @@
+[
+  {
+    "category": "functional",
+    "description": "Modelo CP-SAT com um AddAutomaton por enfermeiro (8 x 14) que gera uma escala válida, ou informa inviabilidade.",
+    "steps": [
+      "Executar: uv run --python 3.12 --with ortools python escala_enfermeiros.py",
+      "Conferir o cabeçalho 'Autômato: 818 estados, 1273 transições, 50 estados finais'",
+      "Conferir a tabela de 8 enfermeiros x 14 dias com siglas F/D/N"
+    ],
+    "passes": true,
+    "evidence": "Execução em 2026-11-11: autômato 818/1273/50 e escala impressa; cada enfermeiro com 7 dias trabalhados."
+  },
+  {
+    "category": "functional",
+    "description": "Cobertura exata de 2 enfermeiros no turno diurno e 2 no noturno em cada um dos 14 dias.",
+    "steps": [
+      "Executar o modelo e ler as linhas 'Diurno (D)' e 'Noturno (N)'",
+      "Rodar verificar.py, que reconta a cobertura coluna a coluna de forma independente"
+    ],
+    "passes": true,
+    "evidence": "verificar.py: '[OK] escala do solver: 0 violações' (inclui as 14 colunas x 2 turnos)."
+  },
+  {
+    "category": "functional",
+    "description": "Regras individuais 1 a 7 da seção 1.3 impostas dentro do autômato (dia, consecutivos, noites, total, fim de semana).",
+    "steps": [
+      "Ler construir_automato() e identificar onde cada regra proíbe uma transição",
+      "Rodar verificar.py e conferir a equivalência exaustiva com as regras lidas do PDF"
+    ],
+    "passes": true,
+    "evidence": "'[OK] autômato vs regras em 3^14 = 4782969 sequências: 8420 aceitas, 0 divergências'."
+  },
+  {
+    "category": "functional",
+    "description": "Instância inviável é reconhecida e comunicada com mensagem clara.",
+    "steps": [
+      "Rodar verificar.py, que resolve a instância com cobertura 3+3 (demanda 84 > capacidade 56)",
+      "Conferir a mensagem 'O problema é inviável: não existe escala que satisfaça todas as restrições.' no caminho de gerar_escala()/__main__"
+    ],
+    "passes": true,
+    "evidence": "'[OK] cobertura 3+3 (demanda 84 > capacidade 56) é declarada inviável'."
+  },
+  {
+    "category": "functional",
+    "description": "Saída formatada para leitura humana: dias da semana, siglas, totais por enfermeiro e legenda.",
+    "steps": [
+      "Executar o modelo e conferir cabeçalho Seg..Dom, colunas Trab/Noites e legenda"
+    ],
+    "passes": true,
+    "evidence": "Saída de 2026-11-11 impressa com cabeçalho de dias, totais e legenda."
+  },
+  {
+    "category": "verification",
+    "description": "Verificador independente (escrito a partir do PDF, sem reutilizar o autômato) aprova a escala do solver.",
+    "steps": [
+      "uv run --python 3.12 --with ortools python verificar.py",
+      "Conferir exit code 0"
+    ],
+    "passes": true,
+    "evidence": "'RESULTADO: APROVADO', exit 0 (2026-11-11)."
+  },
+  {
+    "category": "verification",
+    "description": "O próprio verificador é testado contra 7 sequências inválidas conhecidas.",
+    "steps": [
+      "Rodar verificar.py e conferir a linha 'verificador rejeita 7 casos inválidos conhecidos'"
+    ],
+    "passes": true,
+    "evidence": "'[OK] verificador rejeita 7 casos inválidos conhecidos' (sem falsos OK)."
+  },
+  {
+    "category": "docs",
+    "description": "Instruções de execução reproduzíveis, com versão de Python e OR-Tools documentadas.",
+    "steps": [
+      "Criar venv com Python 3.12 e instalar requirements.txt",
+      "Rodar verificar.py a partir desse venv e obter exit 0"
+    ],
+    "passes": true,
+    "evidence": "README.md + requirements.txt; verificação executada a partir de venv 3.12 com ortools 9.15.6755 (2026-11-11)."
+  }
+]
